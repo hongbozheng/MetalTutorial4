@@ -30,6 +30,8 @@ class Node {
     var texture: MTLTexture
     lazy var samplerState: MTLSamplerState? = Node.defaultSampler(device:self.device)
     
+    let light = Light(color:(1.0,1.0,1.0),ambientIntensity:0.1,direction:(0.0,0.0,1.0),diffuseIntensity:0.8,shininess:10,specularIntensity:2)
+    
     init(name:String, vertices:Array<Vertex>,device:MTLDevice,texture:MTLTexture){
         var vertexData = Array<Float>()
         for vertex in vertices{
@@ -44,7 +46,9 @@ class Node {
     vertexCount = vertices.count
     self.texture = texture
         
-    self.bufferProvider = BufferProvider(device: device, inflightBuffersCount: 3, sizeOfUniformsBufffer: MemoryLayout<Float>.size * Matrix4.numberOfElements() * 2)
+        let sizeOfUniformBuffer = MemoryLayout<Float>.size * Matrix4.numberOfElements() * 2 + Light.size()
+        self.bufferProvider = BufferProvider(device: device, inflightBuffersCount: 3, sizeOfUniformsBufffer: sizeOfUniformBuffer)
+        
     }
     
     
@@ -56,7 +60,8 @@ class Node {
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
-        renderPassDescriptor.colorAttachments[0].clearColor =     MTLClearColor(red: 0.0, green: 104.0/255.0, blue: 5.0/255.0, alpha: 1.0)
+        //Why hasn’t the background changed? The answer for that is simple: The vertex shader runs on all scene geometry, but the background is not geometry. In fact, it’s not even a background, it’s just a constant color which the GPU uses for places where nothing is drawn.
+        renderPassDescriptor.colorAttachments[0].clearColor =     MTLClearColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         renderPassDescriptor.colorAttachments[0].storeAction = .store
        
         // Think of this as the list of render commands that you wish to execute for this frame.
@@ -86,9 +91,10 @@ class Node {
 //        memcpy(bufferPointer, nodeModelMatrix.raw(), MemoryLayout<Float>.size*Matrix4.numberOfElements())
 //        memcpy(bufferPointer + MemoryLayout<Float>.size * Matrix4.numberOfElements(), projectionMatrix.raw(),  MemoryLayout<Float>.size * Matrix4.numberOfElements())
         
-        let uniformBuffer = bufferProvider.nextUniformsBuffer(projectionMatrix: projectionMatrix, modelViewMatrix: nodeModelMatrix)
+        let uniformBuffer = bufferProvider.nextUniformsBuffer(projectionMatrix: projectionMatrix, modelViewMatrix: nodeModelMatrix,light:light)
         
         renderEncoder.setVertexBuffer(uniformBuffer, offset: 0, at: 1)
+        renderEncoder.setFragmentBuffer(uniformBuffer, offset: 0, at: 1)
         renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertexCount,instanceCount:vertexCount/3)
         renderEncoder.endEncoding()
         

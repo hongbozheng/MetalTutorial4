@@ -23,6 +23,7 @@
 		306D723A1EDB5C410007264C /* MetalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306D72391EDB5C410007264C /* MetalViewController.swift */; };
 		306D723C1EDB5C760007264C /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306D723B1EDB5C760007264C /* SceneViewController.swift */; };
 		306D723E1EDB63D80007264C /* cube.png in Resources */ = {isa = PBXBuildFile; fileRef = 306D723D1EDB63D80007264C /* cube.png */; };
+		306D72401EDB84A00007264C /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306D723F1EDB84A00007264C /* Light.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		306D72391EDB5C410007264C /* MetalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalViewController.swift; sourceTree = "<group>"; };
 		306D723B1EDB5C760007264C /* SceneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
 		306D723D1EDB63D80007264C /* cube.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cube.png; sourceTree = "<group>"; };
+		306D723F1EDB84A00007264C /* Light.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Light.swift; path = ../Light.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				306D71F91EDA158C0007264C /* AppDelegate.swift */,
 				306D72391EDB5C410007264C /* MetalViewController.swift */,
 				306D723B1EDB5C760007264C /* SceneViewController.swift */,
+				306D723F1EDB84A00007264C /* Light.swift */,
 				306D72331EDA33980007264C /* Cube.swift */,
 				306D72371EDB48430007264C /* MetalTexture.swift */,
 				306D72271EDA18170007264C /* Shader.metal */,
@@ -296,6 +299,7 @@
 				306D72281EDA18170007264C /* Shader.metal in Sources */,
 				306D72301EDA1B7B0007264C /* Matrix4.m in Sources */,
 				306D72361EDB36B50007264C /* BufferProvider.swift in Sources */,
+				306D72401EDB84A00007264C /* Light.swift in Sources */,
 				306D71FA1EDA158C0007264C /* AppDelegate.swift in Sources */,
 				306D72381EDB48430007264C /* MetalTexture.swift in Sources */,
 				306D72341EDA33980007264C /* Cube.swift in Sources */,
